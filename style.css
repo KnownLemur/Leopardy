@@ -10,7 +10,7 @@ body {
   align-self: center;
   justify-content: center;
   align-content: center;
-  margin-top: 15px;
+  margin-top: 5px;
 }
 
 .btns {
@@ -189,8 +189,8 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 95vw;
-  height: 95vh;
+  width: 90vw;
+  height: 90vh;
   overflow: hidden; /* impedisce che l'immagine esca */
 }
 

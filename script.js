@@ -219,13 +219,9 @@ if(document.getElementById("testo-risposta")){
     localStorage.setItem("turno", turno);
     window.location.href = "index.html";
   };
-
-  document.body.appendChild(correctBtn);
-  document.body.appendChild(wrongBtn);
-
-  if ("serviceWorker" in navigator) {
+}
+if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js")
       .then(() => console.log("Service Worker registrato"))
       .catch(err => console.error("Errore SW:", err));
   }
-}
