@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Domanda</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="box" id="box">
+    </div>
+
+    <div class="btns">
+      <button id="btn-risposta" class="btn-jeop"><span id="timer"></span></button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    const btnRisposta = document.getElementById("btn-risposta");
+    const timerSpan = document.getElementById("timer");
+
+    let tempo = 180;
+
+    const countdown = setInterval(() => {
+      const minuti = Math.floor(tempo / 60);
+      const secondi = tempo % 60;
+      timerSpan.textContent = `${minuti}:${secondi.toString().padStart(2, "0")}`;
+
+      if (tempo <= 0) {
+        clearInterval(countdown);
+        timerSpan.textContent = "";
+        btnRisposta.textContent = "Mostra Risposta";
+        btnRisposta.style.backgroundImage = "linear-gradient(144deg,#de0000, #ff6522 50%,#ff7ab1)";
+      }
+
+      tempo--;
+    }, 1000);
+  </script>
+</body>
+
+</html>

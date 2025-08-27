@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Jeopardy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="util/bootstrap.min.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b2e8a">
+</head>
+
+<body>
+  <div class="container">
+    <div id="grid"></div>
+    <div class="dropdown">
+      <button id="threeDots" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+        aria-expanded="false"></button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#" onclick="resetGame()">Ricomincia</a></li>
+        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modificaPuntiModal">Modifica
+            Punteggi</a></li>
+        <li><a class="dropdown-item" href="#">Something else here</a></li>
+      </ul>
+    </div>
+
+    <!-- Modale Bootstrap -->
+    <div class="modal fade" id="modificaPuntiModal" tabindex="-1" aria-labelledby="modificaPuntiLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <!-- Header -->
+          <div class="modal-header">
+            <h5 class="modal-title" id="modificaPuntiLabel">Modifica Punteggi</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+          </div>
+
+          <!-- Corpo -->
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="inputTeam1" class="form-label">Punteggio TEAM 1</label>
+              <input type="number" id="inputTeam1" class="form-control" min="0">
+            </div>
+            <div class="mb-3">
+              <label for="inputTeam2" class="form-label">Punteggio TEAM 2</label>
+              <input type="number" id="inputTeam2" class="form-control" min="0">
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">X Chiudi</button>
+            <button type="button" class="btn btn-primary" onclick="modifPunti()">💾 Salva</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div id="punteggi">
+      <span id="punti1"">TEAM 1: <span id=" team1">0</span></span>
+      <span id="punti2">TEAM 2: <span id="team2">0</span></span>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="util/bootstrap.bundle.min.js"></script>
+  <script>
+    function modifPunti() {
+      // Leggo i valori dagli input
+      let nuovoTeam1 = document.getElementById("inputTeam1").value;
+      let nuovoTeam2 = document.getElementById("inputTeam2").value;
+
+      // Verifico che siano numeri
+      if (nuovoTeam1 !== "" && !isNaN(nuovoTeam1)) {
+        document.getElementById("team1").textContent = nuovoTeam1;
+      }
+      if (nuovoTeam2 !== "" && !isNaN(nuovoTeam2)) {
+        document.getElementById("team2").textContent = nuovoTeam2;
+      }
+
+      // Chiudo la modale dopo il salvataggio
+      let modalElement = document.getElementById("modificaPuntiModal");
+      let modalInstance = bootstrap.Modal.getInstance(modalElement);
+      modalInstance.hide();
+    }
+  </script>
+</body>
+
+</html>

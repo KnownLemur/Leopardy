@@ -1,0 +1,200 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: #0b2e8a;
+  color: white;
+}
+
+.container {
+  position: relative;
+  align-self: center;
+  justify-content: center;
+  align-content: center;
+  margin-top: 15px;
+}
+
+.btns {
+  position: fixed;
+  width: 100%;
+  bottom: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+#testo-risposta {
+  white-space: pre-line;
+  font-size: 28px;
+}
+
+#resp{
+  margin-left: 3vw;
+  width: 90vw;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  margin: 20px 0;
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: repeat(5, 140px);
+  grid-template-rows: 60px repeat(5, 100px);
+  gap: 8px;
+  justify-content: center;
+  transition: transform 1s;
+}
+
+.header {
+  background: #ff9500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  border-radius: 6px;
+}
+
+.cell {
+  background: blue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+
+.turn {
+  padding: 5px;
+  border: 2px solid white;
+  border-radius: 6px;
+}
+.activeTurn {
+  padding: 5px;
+  border: 2px solid #ff9500;
+  border-radius: 6px;
+}
+
+.cell.red {
+  background: red;
+}
+
+@media (max-width: 500px) {
+  #grid {
+    grid-template-columns: repeat(5, 80px);
+    grid-template-rows: 60px repeat(5, 120px);
+    gap: 2px;
+    justify-content: center;
+  }
+  .cell {
+    font-size: 16px;
+  }
+}
+
+@media (max-height: 500px) {
+  #grid {
+    grid-template-columns: repeat(5, 120px);
+    grid-template-rows: 30px repeat(5, 60px);
+    gap: 2px;
+    justify-content: center;
+  }
+  .cell {
+    font-size: 16px;
+  }
+  .header {
+    font-size: 12px;
+  }
+}
+
+#punteggi {
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.btn-jeop {
+  height: 30px;
+  width: 100px;
+  align-items: center;
+  border: 0;
+  border-radius: 8px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  display: flex;
+  font-family: Phantomsans, sans-serif;
+  font-size: 20px;
+  justify-content: center;
+  line-height: 1em;
+  max-width: 100%;
+  min-width: 140px;
+  padding: 19px 24px;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.btn-jeop:active,
+.btn-jeop:hover {
+  outline: 0;
+}
+
+@media (min-width: 768px) {
+  .btn-jeop {
+    font-size: 24px;
+    min-width: 196px;
+  }
+}
+
+#btn-correct {
+  background-image: linear-gradient(144deg,#00d600, #00f900 50%,#b5ffb2);
+}
+
+#btn-wrong {
+  background-image: linear-gradient(144deg,#de0000, #ff6522 50%,#ff7ab1);
+}
+
+#btn-risposta {
+  background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+}
+
+#threeDots {
+  background: url("util/3dots.svg") no-repeat center left;
+  background-size: 12px 12px;
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 1000;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 95vw;
+  height: 95vh;
+  overflow: hidden; /* impedisce che l'immagine esca */
+}
+
+#box {
+  font-size: 36;
+  white-space: pre-line;
+}
