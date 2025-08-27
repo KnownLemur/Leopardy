@@ -56,170 +56,166 @@ const dati = {
         ["Your Song \nElton John", "Carolina Kostner", "Hagia Sofia", "Hugo", "3"]
       ]
     };
+// --- Funzioni di gestione punteggi ---
+let team1Score = 0;
+let team2Score = 0;
+let turno = 1;
 
-// recupero punteggi e turno dai localStorage
-let team1Score = Number(localStorage.getItem("team1Score") || 0);
-let team2Score = Number(localStorage.getItem("team2Score") || 0);
-let turno = Number(localStorage.getItem("turno") || 1); // 1 = Team1, 2 = Team2
+function caricaPunteggi() {
+  team1Score = Number(localStorage.getItem("team1Score") || 0);
+  team2Score = Number(localStorage.getItem("team2Score") || 0);
+  turno = Number(localStorage.getItem("turno") || 1);
+}
 
-// aggiorna visualizzazione punteggi
 function aggiornaPunteggi() {
   const t1 = document.getElementById("team1");
   const t2 = document.getElementById("team2");
-  if(t1 && t2) {
+  if(t1 && t2){
     t1.textContent = team1Score;
     t2.textContent = team2Score;
   }
+
   const team1 = document.getElementById("punti1");
   const team2 = document.getElementById("punti2");
-  if(turno===1) {
-    team1.className = "activeTurn";
-    team2.className = "turn";
-  } else {
-    team1.className = "turn";
-    team2.className = "activeTurn";
-  }
-}
-
-// INDEX.HTML: aggiorna celle rosse al ritorno
-document.addEventListener("DOMContentLoaded", () => {
-  const cells = document.querySelectorAll(".cell");
-  cells.forEach((cell, index) => {
-    if (localStorage.getItem("cell-" + (index + 1)) === "red") {
-      cell.classList.add("red");
-    }
-  });
-  aggiornaPunteggi();
-});
-
-// INDEX.HTML: click su cella
-if(document.getElementById("grid")){
-  const grid = document.getElementById("grid");
-  dati.categorie.forEach(cat => {
-    const header = document.createElement("div");
-    header.classList.add("header");
-    header.textContent = cat;
-    header.style.color = "white";
-    grid.appendChild(header);
-  });
-  for (let r = 0; r < 5; r++) {
-    for (let c = 0; c < 5; c++) {
-      const index = r*5+c+1;
-      const cell = document.createElement("div");
-      cell.classList.add("cell");
-      cell.textContent = (r+1)*100;
-      cell.style.color = "white";
-      if(localStorage.getItem("cell-"+index)==="red"){
-        cell.classList.add("red");
-      }
-      cell.addEventListener("click",()=>{
-        localStorage.setItem("cell-"+index,"red");
-        localStorage.setItem("row", r);
-        localStorage.setItem("col", c);
-        window.location.href = "domanda.html";
-      });
-      grid.appendChild(cell);
+  if(team1 && team2){
+    if(turno===1){
+      team1.className = "activeTurn";
+      team2.className = "turn";
+    } else {
+      team1.className = "turn";
+      team2.className = "activeTurn";
     }
   }
 }
 
-// RESET
+// --- Reset del gioco ---
 function resetGame(){
   const cells = document.querySelectorAll(".cell");
   cells.forEach(cell => cell.classList.remove("red"));
   localStorage.clear();
-  team1Score=0; team2Score=0; turno=1;
+  caricaPunteggi();
   aggiornaPunteggi();
 }
 
-// DOMANDA.HTML
+// --- INDEX.HTML ---
+document.addEventListener("DOMContentLoaded", () => {
+  caricaPunteggi();
+
+  const cells = document.querySelectorAll(".cell");
+  cells.forEach((cell, index) => {
+    if(localStorage.getItem("cell-"+(index+1))==="red"){
+      cell.classList.add("red");
+    }
+  });
+  aggiornaPunteggi();
+
+  const grid = document.getElementById("grid");
+  if(grid){
+    dati.categorie.forEach(cat => {
+      const header = document.createElement("div");
+      header.classList.add("header");
+      header.textContent = cat;
+      header.style.color = "white";
+      grid.appendChild(header);
+    });
+
+    for(let r=0; r<5; r++){
+      for(let c=0; c<5; c++){
+        const index = r*5 + c + 1;
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        cell.textContent = (r+1)*100;
+        cell.style.color = "white";
+
+        if(localStorage.getItem("cell-"+index)==="red") cell.classList.add("red");
+
+        cell.addEventListener("click", ()=>{
+          localStorage.setItem("cell-"+index,"red");
+          localStorage.setItem("row", r);
+          localStorage.setItem("col", c);
+          window.location.href = "domanda.html";
+        });
+
+        grid.appendChild(cell);
+      }
+    }
+  }
+});
+
+// --- DOMANDA.HTML ---
 if(document.getElementById("box")){
   const r = Number(localStorage.getItem("row"));
   const c = Number(localStorage.getItem("col"));
-  //document.getElementById("titolo-domanda").textContent = dati.categorie[c];
   const domanda = dati.domande[r][c];
   const box = document.getElementById("box");
-
-  // svuota il contenitore
   box.innerHTML = "";
 
-  if(domanda.tipo === "testo"){
+  if(domanda.tipo==="testo"){
     box.textContent = domanda.contenuto;
-    box.style.fontSize = "30px"
-  } 
-  else if(domanda.tipo === "immagine"){
-    const img = new Image(); // crea l'immagine in memoria prima di appenderla
+    box.style.fontSize = "30px";
+  } else if(domanda.tipo==="immagine"){
+    const img = new Image();
     img.src = domanda.contenuto;
-
-    img.onload = () => {
-        const boxWidth = box.clientWidth;
-        const boxHeight = box.clientHeight;
-        let width = img.naturalWidth;
-        let height = img.naturalHeight;
-
-        // scala necessaria per ridurre o ingrandire senza deformare
-        const widthRatio = boxWidth / width;
-        const heightRatio = boxHeight / height;
-
-        let scale;
-
-        if (width > boxWidth || height > boxHeight) {
-            // immagine più grande della box → scala verso il basso
-            scale = Math.min(widthRatio, heightRatio);
-        } else {
-            // immagine più piccola → scala verso l'alto fino a far combaciare almeno una dimensione
-            scale = Math.min(widthRatio, heightRatio);
-        }
-
-        img.style.width = width * scale + "px";
-        img.style.height = height * scale + "px";
-
-        // appendiamo l'immagine solo dopo aver calcolato la dimensione
-        box.innerHTML = ""; // svuota la box prima
-        box.appendChild(img);
+    img.onload = ()=>{
+      const boxWidth = box.clientWidth;
+      const boxHeight = box.clientHeight;
+      const widthRatio = boxWidth / img.naturalWidth;
+      const heightRatio = boxHeight / img.naturalHeight;
+      const scale = Math.min(widthRatio, heightRatio);
+      img.style.width = img.naturalWidth * scale + "px";
+      img.style.height = img.naturalHeight * scale + "px";
+      box.innerHTML = "";
+      box.appendChild(img);
     }
-}
-
-  else if(domanda.tipo === "audio"){
+  } else if(domanda.tipo==="audio"){
     const audio = document.createElement("audio");
     audio.controls = true;
     audio.src = domanda.contenuto;
     box.appendChild(audio);
   }
 
-  document.getElementById("btn-risposta").addEventListener("click", ()=>{
-    window.location.href = `risposta.html`;
-  });
+  const btnRisposta = document.getElementById("btn-risposta");
+  if(btnRisposta){
+    btnRisposta.addEventListener("click", ()=>{
+      window.location.href = "risposta.html";
+    });
+  }
 }
 
-// RISPOSTA.HTML
+// --- RISPOSTA.HTML ---
 if(document.getElementById("testo-risposta")){
+  caricaPunteggi();
   const r = Number(localStorage.getItem("row"));
   const c = Number(localStorage.getItem("col"));
+
   document.getElementById("testo-risposta").textContent = dati.risposte[r][c];
 
   const correctBtn = document.getElementById("btn-correct");
   const wrongBtn = document.getElementById("btn-wrong");
 
-  function correctAnswer() {
+  function correctAnswer(){
     const punti = (r+1)*100;
     if(turno===1) team1Score += punti;
     else team2Score += punti;
     turno = turno===1 ? 2 : 1;
+
     localStorage.setItem("team1Score", team1Score);
     localStorage.setItem("team2Score", team2Score);
     localStorage.setItem("turno", turno);
+
     window.location.href = "index.html";
   }
 
-  function wrongAnswer() {
+  function wrongAnswer(){
     const punti = (r+1)*100;
     if(turno===1) team1Score -= punti;
     else team2Score -= punti;
     turno = turno===1 ? 2 : 1;
+
     localStorage.setItem("team1Score", team1Score);
     localStorage.setItem("team2Score", team2Score);
     localStorage.setItem("turno", turno);
+
     window.location.href = "index.html";
   }
 
@@ -227,8 +223,9 @@ if(document.getElementById("testo-risposta")){
   wrongBtn.addEventListener("click", wrongAnswer);
 }
 
+// --- Service Worker ---
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js")
-      .then(() => console.log("Service Worker registrato"))
-      .catch(err => console.error("Errore SW:", err));
-  }
+  navigator.serviceWorker.register("service-worker.js")
+    .then(()=>console.log("Service Worker registrato"))
+    .catch(err=>console.error("Errore SW:", err));
+}
