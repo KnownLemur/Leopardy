@@ -198,8 +198,11 @@ if(document.getElementById("testo-risposta")){
   const c = Number(localStorage.getItem("col"));
   document.getElementById("testo-risposta").textContent = dati.risposte[r][c];
 
+  const correctBtn = document.getElementById("btn-correct");
+  const wrongBtn = document.getElementById("btn-wrong");
+
   function correctAnswer() {
-    let punti = (r+1)*100;
+    const punti = (r+1)*100;
     if(turno===1) team1Score += punti;
     else team2Score += punti;
     turno = turno===1 ? 2 : 1;
@@ -207,10 +210,10 @@ if(document.getElementById("testo-risposta")){
     localStorage.setItem("team2Score", team2Score);
     localStorage.setItem("turno", turno);
     window.location.href = "index.html";
-  };
+  }
 
   function wrongAnswer() {
-    let punti = (r+1)*100;
+    const punti = (r+1)*100;
     if(turno===1) team1Score -= punti;
     else team2Score -= punti;
     turno = turno===1 ? 2 : 1;
@@ -218,8 +221,12 @@ if(document.getElementById("testo-risposta")){
     localStorage.setItem("team2Score", team2Score);
     localStorage.setItem("turno", turno);
     window.location.href = "index.html";
-  };
+  }
+
+  correctBtn.addEventListener("click", correctAnswer);
+  wrongBtn.addEventListener("click", wrongAnswer);
 }
+
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js")
       .then(() => console.log("Service Worker registrato"))
