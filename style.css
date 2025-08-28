@@ -56,7 +56,8 @@ h1 {
   gap: 8px;
   justify-items: stretch; /* le celle si allargano a 100% della colonna */
   width: 100%;
-  height: calc(100vh - 100px); /* lascia spazio per intestazioni e pulsanti */
+  height: calc(100vh - 140px); /* lascia spazio per intestazioni e pulsanti */
+  margin-bottom: 5px;
 }
 
 .header {
@@ -104,7 +105,7 @@ h1 {
     gap: 2px;
     justify-items: stretch; /* le celle si allargano a 100% della colonna */
     width: 100%;
-    height: calc(100vh - 100px); /* lascia spazio per intestazioni e pulsanti */
+    height: calc(100vh - 120px); /* lascia spazio per intestazioni e pulsanti */
   }
   .cell {
     font-size: 16px;
@@ -130,9 +131,17 @@ h1 {
   margin: 10px;
   display: flex;
   justify-content: center;
-  gap: 50px;
-  font-size: 20px;
+  align-items: center;
+  gap: 25px;
+  font-size: 16px;
   font-weight: bold;
+  height: 30px;
+  position: fixed;
+  z-index: 10;
+  width: auto;
+  left: 30%;
+  right: 30%;
+  bottom: 5px;
 }
 
 .btn-jeop {
