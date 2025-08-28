@@ -56,7 +56,7 @@ h1 {
   gap: 8px;
   justify-items: stretch; /* le celle si allargano a 100% della colonna */
   width: 100%;
-  height: calc(100vh - 140px); /* lascia spazio per intestazioni e pulsanti */
+  height: calc(100vh - 150px); /* lascia spazio per intestazioni e pulsanti */
   margin-bottom: 5px;
 }
 
@@ -105,7 +105,7 @@ h1 {
     gap: 2px;
     justify-items: stretch; /* le celle si allargano a 100% della colonna */
     width: 100%;
-    height: calc(100vh - 120px); /* lascia spazio per intestazioni e pulsanti */
+    height: calc(100vh - 140px); /* lascia spazio per intestazioni e pulsanti */
   }
   .cell {
     font-size: 16px;
@@ -114,10 +114,13 @@ h1 {
 
 @media (max-height: 500px) {
   #grid {
-    grid-template-columns: repeat(5, 120px);
-    grid-template-rows: 30px repeat(5, 60px);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* occupa tutta la larghezza */
+    grid-template-rows: 60px repeat(5, 1fr); /* altezza proporzionale */
     gap: 2px;
-    justify-content: center;
+    justify-items: stretch; /* le celle si allargano a 100% della colonna */
+    width: 100%;
+    height: calc(100vh - 100px); /* lascia spazio per intestazioni e pulsanti */
   }
   .cell {
     font-size: 16px;
