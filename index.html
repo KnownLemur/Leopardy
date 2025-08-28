@@ -19,9 +19,7 @@
         aria-expanded="false"></button>
       <ul class="dropdown-menu">
         <li><a class="dropdown-item" href="#" onclick="resetGame()">Ricomincia</a></li>
-        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modificaPuntiModal">Modifica
-            Punteggi</a></li>
-        <li><a class="dropdown-item" href="#">Something else here</a></li>
+        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modificaPuntiModal">Modifica Punteggi</a></li>
       </ul>
     </div>
 
@@ -60,7 +58,7 @@
     </div>
 
     <div id="punteggi">
-      <span id="punti1"">TEAM 1: <span id=" team1">0</span></span>
+      <span id="punti1">TEAM 1: <span id="team1">0</span></span>
       <span id="punti2">TEAM 2: <span id="team2">0</span></span>
     </div>
   </div>
@@ -76,9 +74,11 @@
       // Verifico che siano numeri
       if (nuovoTeam1 !== "" && !isNaN(nuovoTeam1)) {
         document.getElementById("team1").textContent = nuovoTeam1;
+        localStorage.setItem("team1Score", nuovoTeam1);
       }
       if (nuovoTeam2 !== "" && !isNaN(nuovoTeam2)) {
         document.getElementById("team2").textContent = nuovoTeam2;
+        localStorage.setItem("team2Score", nuovoTeam2);
       }
 
       // Chiudo la modale dopo il salvataggio
